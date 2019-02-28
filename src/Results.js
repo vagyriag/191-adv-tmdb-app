@@ -7,7 +7,7 @@ const Results = function(props){
     return <div className="row">
     {props.movies.map((movie) => {
       let image = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-      return <div onClick={() => props.onMovieClick(movie.id)} className="col-3" key={movie.id}>
+      return <div className="col-3" key={movie.id}>
         <MovieCard
           image={movie.poster_path != null ? image : defaultImage}
           title={movie.title}

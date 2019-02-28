@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+
 import SearchBar from './SearchBar';
 import MovieCard from './MovieCard';
 import api from './api';
 import Results from './Results';
+import Movie from './Movie';
 
 
 class App extends Component {
@@ -11,7 +14,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      page: 0,
       results: [],
     };
   }
@@ -31,27 +33,32 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App container">
+      <BrowserRouter>
+        <div className="App container">
 
-        <div className="row">
-          <div className="col">
+          <div className="row">
+            <div className="col">
 
-            <SearchBar
-              //value="hola"
-              onSearch={(value) => {
-                console.log(value);
-                this.searchByTitle(value);
-              }}
-              />
+              <SearchBar
+                //value="hola"
+                onSearch={(value) => {
+                  console.log(value);
+                  this.searchByTitle(value);
+                }}
+                />
 
+            </div>
           </div>
+
+          <Route path="/" exact 
+            render={() => <Results movies={this.state.results} />} />
+          {/*<Results movies={this.state.results} />*/}
+
+          <Route path="/pelicula/:movieId" component={Movie} />
+          
+
         </div>
-
-        {this.state.page === 0 && <Results onMovieClick={(id) => this.setState({ page: 1 })} movies={this.state.results} />}
-              
-        {this.state.page === 1 && <h1>Página 1</h1>}
-
-      </div>
+      </BrowserRouter>
     );
   }
 }
