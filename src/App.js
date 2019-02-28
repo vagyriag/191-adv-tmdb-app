@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import SearchBar from './SearchBar';
 import MovieCard from './MovieCard';
 import api from './api';
+import Results from './Results';
 
-const defaultImage = 'https://cumbrepuebloscop20.org/wp-content/uploads/2018/09/Gato-Azul-Ruso-2.jpg';
 
 class App extends Component {
 
@@ -11,6 +11,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      page: 0,
       results: [],
     };
   }
@@ -46,20 +47,9 @@ class App extends Component {
           </div>
         </div>
 
-        <div className="row">
-          {this.state.results.map((movie) => {
-            let image = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-            return <div className="col-4">
-              <MovieCard 
-                key={movie.id}
-                image={movie.poster_path != null ? image : defaultImage}
-                title={movie.title}
-                description={movie.overview}
-                />
-            </div>
-          })}
-        </div>
-
+        {this.state.page === 0 && <Results onMovieClick={(id) => this.setState({ page: 1 })} movies={this.state.results} />}
+              
+        {this.state.page === 1 && <h1>Página 1</h1>}
 
       </div>
     );
