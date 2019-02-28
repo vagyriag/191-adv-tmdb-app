@@ -16,6 +16,16 @@ export default {
           });
     },
     getById: function(id, callback){
-        
+      let url = `${apiBase}/movie/${id}?api_key=${apiKey}`;
+      fetch(url)
+        .catch(error => {
+          console.error(error);
+        })
+        .then(raw => {
+          return raw.json();
+        })
+        .then(info => {
+          callback(info);
+        });
     }
 }
